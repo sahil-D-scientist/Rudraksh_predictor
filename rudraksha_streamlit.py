@@ -30,7 +30,7 @@ with st.form("birth_form", clear_on_submit=False):
     st.subheader("📝 Enter Your Birth Details")
     st.session_state.name = st.text_input("Your Name", value=st.session_state.name)
     st.session_state.dob = st.date_input("Date of Birth", value=st.session_state.dob,
-                                          min_value=datetime.date(1990, 1, 1),
+                                          min_value=datetime.date(1900, 1, 1),
                                           max_value=datetime.date.today())
     st.session_state.tob = st.text_input("Time of Birth (e.g. 04:00)", value=st.session_state.tob)
     st.session_state.birth_place = st.text_input("Place of Birth", value=st.session_state.birth_place)

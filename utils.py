@@ -114,16 +114,32 @@ def get_lat_longi(location_name):
 def create_retrieval_chain_from_faiss(faiss_index):
     retriever = faiss_index.as_retriever(search_type="similarity", search_kwargs={"k": 4})
     print("[✅] FAISS retriever created.",retriever)
+
     prompt_template = ChatPromptTemplate.from_template("""
-You are a Vedic astrology and Rudraksha recommendation expert.
+    You are a Vedic astrology and Rudraksha recommendation expert.
 
-Use the following context to provide a detailed suggestion:
+    Your task is to:
+    - Analyze user input such as Date of Birth, Place of Birth, Name, Rashi, and Nakshatra.
+    - Recommend the most suitable Rudraksha(s).
+    - Retrieve the contextual meaning, spiritual benefits, and significance of the recommended Rudraksha(s) using the given context (from a knowledge base / vector DB).
 
-{context}
+    ---
 
-User Query:
-{input}
-""")
+    User Input:
+    {input}
+
+    ---
+
+    Context:
+    {context}
+
+    ---
+
+    Provide a detailed response including:
+    - Rudraksha type(s) with reasoning
+    - Spiritual and astrological relevance
+    - How it supports the user's planetary or karmic conditions
+    """)
 
     llm = ChatOpenAI(
     model="gpt-4o",  # Use 'model' instead of 'model_name'
